@@ -66,9 +66,19 @@ build() {
 check() {
   cd binutils-build
 
-  # unset LDFLAGS as testsuite makes assumptions about which ones are active
-  # ignore failures in gold testsuite...
-  make -k LDFLAGS="" check || true
+  # current testsuite failure in debuginfod (objdump)
+  # https://sourceware.org/bugzilla/show_bug.cgi?id=28029
+  sed -i '/test_fetch_debuglink $OBJDUMP/d' \
+      $srcdir/binutils-gdb/binutils/testsuite/binutils-all/debuginfod.exp
+
+  # Use minimal flags for testsuite
+  # ld testsuite uses CFLAGS_FOR_TARGET and requires -g
+  # gold testsuite requires CXXFLAGS/CFLAGS with default PIE/PIC disabled
+  make -O CFLAGS_FOR_TARGET="-O2 -g" \
+          CXXFLAGS="-O2 -no-pie -fno-PIC" \
+          CFLAGS="-O2 -no-pie" \
+          LDFLAGS="" \
+          check || true
 }
 
 package() {
