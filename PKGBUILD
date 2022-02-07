@@ -35,6 +35,8 @@ build() {
   cd binutils-build
 
   "$srcdir/binutils-gdb/configure" \
+    CFLAGS="-flto -O3 -pipe" \
+    CXXFLAGS="-flto -O3 -pipe" \
     --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --enable-cet \
@@ -74,9 +76,9 @@ check() {
   # Use minimal flags for testsuite
   # ld testsuite uses CFLAGS_FOR_TARGET and requires -g
   # gold testsuite requires CXXFLAGS/CFLAGS with default PIE/PIC disabled
-  make -O CFLAGS_FOR_TARGET="-O2 -g" \
-          CXXFLAGS="-O2 -no-pie -fno-PIC" \
-          CFLAGS="-O2 -no-pie" \
+  make -O CFLAGS_FOR_TARGET="-O3 -g" \
+          CXXFLAGS="-O3 -no-pie -fno-PIC" \
+          CFLAGS="-O3 -no-pie" \
           LDFLAGS="" \
           check || true
 }
