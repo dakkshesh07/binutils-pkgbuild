@@ -35,8 +35,8 @@ build() {
   cd binutils-build
 
   "$srcdir/binutils-gdb/configure" \
-    CFLAGS="-flto -O3 -pipe" \
-    CXXFLAGS="-flto -O3 -pipe" \
+    CFLAGS="-flto -O3 -pipe -ffunction-sections -fdata-sections" \
+    CXXFLAGS="-flto -O3 -pipe -ffunction-sections -fdata-sections" \
     --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --enable-cet \
