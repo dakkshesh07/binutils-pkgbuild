@@ -61,8 +61,8 @@ build() {
     --with-system-zlib \
     --with-pkgversion="Neutron Binutils"
 
-  make configure-host
-  make tooldir=/usr
+  make -j$(nproc --all) configure-host
+  make -j$(nproc --all) tooldir=/usr
 }
 
 check() {
@@ -80,12 +80,12 @@ check() {
           CXXFLAGS="-O3 -no-pie -fno-PIC" \
           CFLAGS="-O3 -no-pie" \
           LDFLAGS="" \
-          check || true
+          check -j$(nproc --all) || true
 }
 
 package() {
   cd binutils-build
-  make prefix="$pkgdir/usr" tooldir="$pkgdir/usr" install
+  make prefix="$pkgdir/usr" tooldir="$pkgdir/usr" install -j$(nproc --all)
 
   # Remove unwanted files
   rm -f "$pkgdir"/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
