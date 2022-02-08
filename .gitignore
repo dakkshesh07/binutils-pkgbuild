@@ -1,5 +1,5 @@
 binutils-gdb/
 pkg/
 src/
-binutils-*.tar.*
+*binutils-*.tar.*
 *.log
