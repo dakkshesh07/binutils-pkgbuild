@@ -5,7 +5,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=neutron-binutils
-pkgver=2.37
+pkgver=2.38
 pkgrel=1
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
@@ -19,7 +19,7 @@ replaces=(binutils-multilib binutils)
 provides=("binutils=${pkgver}")
 options=(staticlibs !distcc !ccache)
 source=(https://ftp.gnu.org/gnu/binutils/binutils-$pkgver.tar.xz)
-sha256sums=('820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c')
+sha256sums=('e316477a914f567eccc34d5d29785b8b0f5a10208d36bbacedcc39048ecfe024')
 
 prepare() {
   [[ ! -d binutils-gdb ]] && ln -s binutils-$pkgver binutils-gdb
