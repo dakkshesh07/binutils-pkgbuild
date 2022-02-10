@@ -6,7 +6,7 @@
 
 pkgname=neutron-binutils
 pkgver=2.38
-pkgrel=2
+pkgrel=3
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -18,8 +18,8 @@ conflicts=(binutils-multilib binutils)
 replaces=(binutils-multilib binutils)
 provides=("binutils=${pkgver}")
 options=(staticlibs !distcc !ccache)
-source=(https://ftp.gnu.org/gnu/binutils/binutils-$pkgver.tar.xz)
-sha256sums=('e316477a914f567eccc34d5d29785b8b0f5a10208d36bbacedcc39048ecfe024')
+source=("git+https://sourceware.org/git/binutils-gdb.git#branch=binutils-${pkgver/./_}-branch")
+sha256sums=('SKIP')
 
 prepare() {
   [[ ! -d binutils-gdb ]] && ln -s binutils-$pkgver binutils-gdb
