@@ -2,11 +2,11 @@
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 
-# toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
+# toolchain build order: linux-api-headers->glibc->binutils->gcc->glibc->binutils->gcc
 
 pkgname=neutron-binutils
 pkgver=2.38
-pkgrel=1
+pkgrel=2
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -61,8 +61,8 @@ build() {
     --with-system-zlib \
     --with-pkgversion="Neutron Binutils"
 
-  make -j$(nproc --all) configure-host
-  make -j$(nproc --all) tooldir=/usr
+  make -O -j$(nproc --all) configure-host
+  make -O -j$(nproc --all) tooldir=/usr
 }
 
 check() {
