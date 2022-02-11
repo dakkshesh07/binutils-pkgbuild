@@ -6,18 +6,20 @@
 
 pkgname=neutron-binutils
 pkgver=2.38
-pkgrel=3
+pkgrel=4
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
 license=(GPL)
 groups=(base-devel)
-depends=(glibc zlib elfutils)
-makedepends=(elfutils git)
+depends=(glibc zlib libelf)
+makedepends=(git)
+checkdepends=(dejagnu debuginfod bc)
+optdepends=('debuginfod: for debuginfod server/client functionality')
 conflicts=(binutils-multilib binutils)
 replaces=(binutils-multilib binutils)
 provides=("binutils=${pkgver}")
-options=(staticlibs !distcc !ccache)
+options=(staticlibs !distcc !ccache debug)
 source=("git+https://sourceware.org/git/binutils-gdb.git#branch=binutils-${pkgver/./_}-branch")
 sha256sums=('SKIP')
 
@@ -45,8 +47,10 @@ build() {
     --disable-sim \
     --enable-ld=default \
     --enable-lto \
+    --enable-install-libiberty \
     --enable-plugins \
     --disable-gdbserver \
+    --enable-pgo-build=lto \
     --disable-libdecnumber \
     --disable-readline \
     --enable-relro \
@@ -80,7 +84,7 @@ check() {
           CXXFLAGS="-O3 -no-pie -fno-PIC" \
           CFLAGS="-O3 -no-pie" \
           LDFLAGS="" \
-          check -j$(nproc --all) || true
+          check -j$(nproc --all)
 }
 
 package() {
