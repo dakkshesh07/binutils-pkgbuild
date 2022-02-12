@@ -19,7 +19,7 @@ optdepends=('debuginfod: for debuginfod server/client functionality')
 conflicts=(binutils-multilib binutils)
 replaces=(binutils-multilib binutils)
 provides=("binutils=${pkgver}")
-options=(staticlibs !distcc !ccache debug)
+options=(staticlibs !distcc !ccache)
 source=("git+https://sourceware.org/git/binutils-gdb.git#branch=binutils-${pkgver/./_}-branch")
 sha256sums=('SKIP')
 
