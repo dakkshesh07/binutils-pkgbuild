@@ -6,7 +6,7 @@
 
 pkgname=neutron-binutils
 pkgver=2.38
-pkgrel=4
+pkgrel=5
 pkgdesc='A set of programs to assemble and manipulate binary and object files'
 arch=(x86_64)
 url='https://www.gnu.org/software/binutils/'
@@ -36,9 +36,24 @@ prepare() {
 build() {
   cd binutils-build
 
+  # Override makepkg.conf's flags
+  LDFLAGS=${LDFLAGS/-O1/-O3}
+  LDFLAGS=${LDFLAGS/-O2/-O3}
+
+  CPPFLAGS=${CPPFLAGS/-O1/-O3}
+  CPPFLAGS=${CPPFLAGS/-O2/-O3}
+
+  CFLAGS=${CFLAGS/-O1/-O3}
+  CFLAGS=${CFLAGS/-O2/-O3}
+
+  CXXFLAGS=${CXXFLAGS/-O1/-O3}
+  CXXFLAGS=${CXXFLAGS/-O2/-O3}
+
   "$srcdir/binutils-gdb/configure" \
     CFLAGS="-flto -O3 -pipe -ffunction-sections -fdata-sections -ffat-lto-objects" \
     CXXFLAGS="-flto -O3 -pipe -ffunction-sections -fdata-sections -ffat-lto-objects" \
+    CPPFLAGS="-flto -O3 -pipe -ffunction-sections -fdata-sections -ffat-lto-objects" \
+    LDFLAGS="-O3" \
     --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --enable-cet \
